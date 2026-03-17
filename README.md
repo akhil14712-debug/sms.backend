@@ -145,10 +145,3 @@ This project is licensed under the MIT License.
 Made with ❤️ by Akhil | Student Management System
 ```
 
----
-
-### Step 4: Scroll down → Click **"Commit changes"**
-```
-Commit message: "docs: add README"
-                    ↓
-            Click "Commit changes" ✅
