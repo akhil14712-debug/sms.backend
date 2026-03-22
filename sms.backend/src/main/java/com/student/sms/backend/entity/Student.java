@@ -19,14 +19,14 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long sid;
     @Column(name="student_id")
     private String studentId;
-    @Column(name="name")
-    private String name;
-    @Column(name="email",nullable = false,unique = true)
-    private String email;
-    @Column(name="phone",length = 10,unique = true,nullable = false)
-    private String phone;
+    @Column(name="sname" ,nullable = false)
+    private String sname;
+    @Column(name="semail",nullable = false,unique = true)
+    private String semail;
+    @Column(name="sphone",length = 10,unique = true,nullable = false)
+    private String sphone;
 
 }

@@ -17,4 +17,6 @@ public interface CourseService {
     CourseDto updateCourse(Long courseId, CourseDto updatedCourse);
 
     void deleteCourse(Long id);
+
+    long getCourseCount();
 }

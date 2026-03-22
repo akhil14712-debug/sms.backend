@@ -72,4 +72,9 @@ public class CourseServiceImpl implements CourseService{
 
         courseRepository.delete(course);
     }
+
+    @Override
+    public long getCourseCount() {
+        return courseRepository.count();
+    }
 }

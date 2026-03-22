@@ -12,10 +12,10 @@ import lombok.Setter;
 
 public class StudentDto {
 
-    private Long id;
+    private Long sid;
     private String studentId;
-    private String name;
-    private String email;
-    private String phone;
+    private String sname;
+    private String semail;
+    private String sphone;
 
 }

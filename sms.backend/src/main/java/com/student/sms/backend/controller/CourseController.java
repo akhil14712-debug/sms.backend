@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/course")
@@ -51,5 +52,11 @@ public class CourseController {
     public ResponseEntity<String> deleteCourse(@PathVariable Long courseId){
         courseService.deleteCourse(courseId);
         return ResponseEntity.ok("Deleted succesfully");
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCourseCount(){
+            long total = courseService.getCourseCount();
+        return ResponseEntity.ok(total);
     }
 }

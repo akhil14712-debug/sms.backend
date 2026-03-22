@@ -7,21 +7,21 @@ public class StudentMapper {
 
     public static StudentDto mapToStudentDto(Student student){
         return new StudentDto(
-                student.getId(),
+                student.getSid(),
                 student.getStudentId(),
-                student.getName(),
-                student.getEmail(),
-                student.getPhone()
+                student.getSname(),
+                student.getSemail(),
+                student.getSphone()
         );
     }
 
     public static Student mapToStudent(StudentDto studentDto){
         return new Student(
-                studentDto.getId(),
+                studentDto.getSid(),
                 studentDto.getStudentId(),
-                studentDto.getName(),
-                studentDto.getEmail(),
-                studentDto.getPhone()
+                studentDto.getSname(),
+                studentDto.getSemail(),
+                studentDto.getSphone()
         );
     }
 }
