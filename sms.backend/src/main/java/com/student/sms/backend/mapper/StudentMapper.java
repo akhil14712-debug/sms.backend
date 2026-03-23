@@ -16,12 +16,12 @@ public class StudentMapper {
     }
 
     public static Student mapToStudent(StudentDto studentDto){
-        return new Student(
+        Student student = new Student(
                 studentDto.getSid(),
                 studentDto.getStudentId(),
                 studentDto.getSname(),
                 studentDto.getSemail(),
-                studentDto.getSphone()
-        );
+                studentDto.getSphone());
+        return student;
     }
 }

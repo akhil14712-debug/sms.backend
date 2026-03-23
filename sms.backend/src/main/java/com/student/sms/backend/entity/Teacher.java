@@ -4,12 +4,13 @@ package com.student.sms.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 
+@Entity
 @Table(name="teacher")
 public class Teacher {
 

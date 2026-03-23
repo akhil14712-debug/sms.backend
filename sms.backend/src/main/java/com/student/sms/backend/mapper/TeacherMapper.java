@@ -18,13 +18,14 @@ public class TeacherMapper {
     }
 
     public static Teacher mapToTeacher(TeacherDto teacherDto){
-        return new Teacher(
+        Teacher teacher = new Teacher(
                 teacherDto.getTeacherId(),
                 teacherDto.getTname(),
                 teacherDto.getTemail(),
                 teacherDto.getTphone(),
-                teacherDto.getQualification()
-        );
+                teacherDto.getQualification());
+
+        return teacher;
 
     }
 
