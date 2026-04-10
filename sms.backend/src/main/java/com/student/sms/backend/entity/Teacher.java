@@ -29,4 +29,6 @@ public class Teacher {
 
     @Column(name="tqualification")
     private String qualification;
+
+
 }

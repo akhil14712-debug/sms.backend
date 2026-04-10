@@ -21,7 +21,9 @@ public class StudentMapper {
                 studentDto.getStudentId(),
                 studentDto.getSname(),
                 studentDto.getSemail(),
-                studentDto.getSphone());
+                studentDto.getSphone(),
+                null
+        );
         return student;
     }
 }

@@ -2,9 +2,11 @@ package com.student.sms.backend.service;
 
 import com.student.sms.backend.dto.CourseDto;
 import com.student.sms.backend.entity.Course;
+import com.student.sms.backend.entity.Teacher;
 import com.student.sms.backend.exception.ResourceNotFoundException;
 import com.student.sms.backend.mapper.CourseMapper;
 import com.student.sms.backend.repository.CourseRepository;
+import com.student.sms.backend.repository.TeacherRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,14 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService{
 
     private CourseRepository courseRepository;
+    private TeacherRepository teacherRepository;
 
     @Override
 
     public CourseDto createCourse(CourseDto courseDto){
-        Course course = CourseMapper.mapToCourse(courseDto);
+        Teacher teacher = teacherRepository.findById(courseDto.getTeacherId())
+                .orElseThrow(() -> new ResourceNotFoundException("Teacher id is not found"));
+        Course course = CourseMapper.mapToCourse(courseDto,teacher);
         Course createCourse = courseRepository.save(course);
         return CourseMapper.mapToCourseDto(createCourse);
     }
@@ -54,11 +59,14 @@ public class CourseServiceImpl implements CourseService{
     public CourseDto updateCourse(Long courseId, CourseDto updatedCourse) {
         Course course = courseRepository.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Give id is not found"+courseId));
 
+        Teacher teacher = teacherRepository.findById(updatedCourse.getTeacherId())
+                .orElseThrow(() -> new RuntimeException("Teacher not found"));
         course.setCourseId(updatedCourse.getCourseId());
         course.setCourseName(updatedCourse.getCourseName());
-        course.setInstructor(updatedCourse.getInstructor());
+
         course.setFee(updatedCourse.getFee());
         course.setDuration(updatedCourse.getDuration());
+        course.setTeacher(teacher);
 
         Course courseD = courseRepository.save(course);
 

@@ -21,6 +21,7 @@ public class StudentServiceImpl implements StudentService{
 
         Student student = StudentMapper.mapToStudent(studentDto);
         Student createStudent = studentRepository.save(student);
+        System.out.println(student.getSemail());
         return StudentMapper.mapToStudentDto(createStudent);
     }
 

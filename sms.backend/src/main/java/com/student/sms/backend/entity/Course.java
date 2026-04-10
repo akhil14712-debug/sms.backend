@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,12 +26,18 @@ public class Course {
     @Column(name="courseName" , nullable = false)
     private String courseName;
 
-    @Column(name="instructor" , nullable = false)
-    private String instructor;
 
     @Column(name="fee" ,nullable = false)
     private double fee;
 
     @Column(name="duration" ,nullable = false)
     private String duration;
+
+    @ManyToOne
+    @JoinColumn(name="teacher_id",nullable = false)
+    private Teacher teacher;
+
+    @OneToMany(mappedBy = "course")
+    private List<Enrollment> enrollments;
+
 }
