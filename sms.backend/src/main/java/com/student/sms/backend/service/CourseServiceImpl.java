@@ -1,6 +1,7 @@
 package com.student.sms.backend.service;
 
 import com.student.sms.backend.dto.CourseDto;
+import com.student.sms.backend.dto.CourseRequestDto;
 import com.student.sms.backend.entity.Course;
 import com.student.sms.backend.entity.Teacher;
 import com.student.sms.backend.exception.ResourceNotFoundException;
@@ -23,10 +24,10 @@ public class CourseServiceImpl implements CourseService{
 
     @Override
 
-    public CourseDto createCourse(CourseDto courseDto){
-        Teacher teacher = teacherRepository.findById(courseDto.getTeacherId())
+    public CourseDto createCourse(CourseRequestDto courseRequestDto){
+        Teacher teacher = teacherRepository.findById(courseRequestDto.getTeacherId())
                 .orElseThrow(() -> new ResourceNotFoundException("Teacher id is not found"));
-        Course course = CourseMapper.mapToCourse(courseDto,teacher);
+        Course course = CourseMapper.mapToCourse(courseRequestDto,teacher);
         Course createCourse = courseRepository.save(course);
         return CourseMapper.mapToCourseDto(createCourse);
     }
@@ -48,7 +49,7 @@ public class CourseServiceImpl implements CourseService{
         List<CourseDto> CourseDto = new ArrayList();
 
         for(Course course:courses){
-            CourseDto  dto = CourseMapper.mapToCourseDto(course);
+            CourseDto dto = CourseMapper.mapToCourseDto(course);
             CourseDto.add(dto);
         }
 
@@ -56,7 +57,7 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseDto updateCourse(Long courseId, CourseDto updatedCourse) {
+    public CourseDto updateCourse(Long courseId, CourseRequestDto updatedCourse) {
         Course course = courseRepository.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Give id is not found"+courseId));
 
         Teacher teacher = teacherRepository.findById(updatedCourse.getTeacherId())
@@ -68,9 +69,9 @@ public class CourseServiceImpl implements CourseService{
         course.setDuration(updatedCourse.getDuration());
         course.setTeacher(teacher);
 
-        Course courseD = courseRepository.save(course);
+        Course result = courseRepository.save(course);
 
-        CourseDto courseDto = CourseMapper.mapToCourseDto(courseD);
+        CourseDto courseDto = CourseMapper.mapToCourseDto(result);
         return courseDto;
     }
 

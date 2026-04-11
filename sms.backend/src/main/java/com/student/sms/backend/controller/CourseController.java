@@ -2,7 +2,7 @@ package com.student.sms.backend.controller;
 
 
 import com.student.sms.backend.dto.CourseDto;
-import com.student.sms.backend.dto.StudentDto;
+import com.student.sms.backend.dto.CourseRequestDto;
 import com.student.sms.backend.service.CourseService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,8 +20,8 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto courseDto){
-        CourseDto savedCourse = courseService.createCourse(courseDto);
+    public ResponseEntity<CourseDto> createCourse(@RequestBody CourseRequestDto courseRequestDto){
+        CourseDto savedCourse = courseService.createCourse(courseRequestDto);
         return new ResponseEntity<>(savedCourse,HttpStatus.CREATED);
     }
 
@@ -41,7 +41,7 @@ public class CourseController {
 
 
     @PutMapping("{courseId}")
-    public ResponseEntity<CourseDto> updateCourse(@PathVariable Long courseId , @RequestBody CourseDto updatedCourse){
+    public ResponseEntity<CourseDto> updateCourse(@PathVariable Long courseId , @RequestBody CourseRequestDto updatedCourse){
         CourseDto courseDto = courseService.updateCourse(courseId,updatedCourse);
 
         return new ResponseEntity<>(courseDto,HttpStatus.OK);

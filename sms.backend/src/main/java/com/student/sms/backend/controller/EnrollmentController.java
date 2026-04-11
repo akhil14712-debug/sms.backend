@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/enrollment")
@@ -19,6 +20,9 @@ import java.util.List;
 public class EnrollmentController {
 
     private final EnrollementService enrollementService;
+
+
+
 
     @PostMapping
     public ResponseEntity<EnrollmentDto> createEnroll(@RequestBody EnrollmentRequestDto enrollmentRequestDto){
@@ -31,4 +35,32 @@ public class EnrollmentController {
         List<EnrollmentDto> list = enrollementService.getALLEnrollment();
         return new ResponseEntity<>(list,HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<EnrollmentDto> getById(@PathVariable Long id){
+        EnrollmentDto result = enrollementService.getById(id);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Long> getCount(){
+        Long result = enrollementService.getCount();
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<EnrollmentDto> updateEnrollment(@PathVariable Long id ,@RequestBody EnrollmentRequestDto enrollmentRequestDto){
+        EnrollmentDto result = enrollementService.updateEnrollment(id ,enrollmentRequestDto);
+
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteEnroll(@PathVariable Long id){
+
+        enrollementService.deleteEnroll(id);
+        return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
+    }
+
+
 }

@@ -1,17 +1,18 @@
 package com.student.sms.backend.mapper;
 
 import com.student.sms.backend.dto.CourseDto;
+import com.student.sms.backend.dto.CourseRequestDto;
 import com.student.sms.backend.entity.Course;
 import com.student.sms.backend.entity.Teacher;
 
 public class CourseMapper {
 
-    public static Course mapToCourse(CourseDto courseDto , Teacher teacher){
+    public static Course mapToCourse(CourseRequestDto courseRequestDto, Teacher teacher){
         Course course = new Course();
-        course.setCourseId(courseDto.getCourseId());
-        course.setCourseName(courseDto.getCourseName());
-        course.setFee(courseDto.getFee());
-        course.setDuration(courseDto.getDuration());
+        course.setCourseId(courseRequestDto.getCourseId());
+        course.setCourseName(courseRequestDto.getCourseName());
+        course.setFee(courseRequestDto.getFee());
+        course.setDuration(courseRequestDto.getDuration());
         course.setTeacher(teacher);
         course.setEnrollments(null);
 
@@ -24,7 +25,7 @@ public class CourseMapper {
                 course.getCourseName(),
                 course.getFee(),
                 course.getDuration(),
-                course.getTeacher().getTeacherId()
+                course.getTeacher().getTname()
         );
     }
 }

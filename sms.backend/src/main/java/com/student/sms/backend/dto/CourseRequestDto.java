@@ -6,16 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
+@Getter
 
-public class CourseDto {
+public class CourseRequestDto {
 
     private Long courseId;
     private String courseName;
     private double fee;
     private String duration;
-    private String teacherName;
+    private Long teacherId;
+
+
 }

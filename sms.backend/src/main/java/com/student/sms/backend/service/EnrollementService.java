@@ -10,4 +10,14 @@ public interface EnrollementService {
     EnrollmentDto createEnroll(EnrollmentRequestDto enrollmentRequestDto);
 
     List<EnrollmentDto> getALLEnrollment();
+
+    EnrollmentDto getById(Long id);
+
+
+
+    Long getCount();
+
+    EnrollmentDto updateEnrollment(Long id ,EnrollmentRequestDto enrollmentRequestDto);
+
+    void deleteEnroll(Long id);
 }

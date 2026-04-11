@@ -43,8 +43,9 @@ public class EnrollementServiceImpl implements EnrollementService{
         e.setCourse(course);
         e.setEnrollmentDate(enrollmentRequestDto.getEnrollmentDate());
         e.setStatus(enrollmentRequestDto.getStatus());
+        Enrollment e1 = enrollmentRepository.save(e);
 
-        return EnrollmentMapper.mapToDto(enrollmentRepository.save(e));
+        return EnrollmentMapper.mapToDto(e1);
 
 
     }
@@ -63,5 +64,47 @@ public class EnrollementServiceImpl implements EnrollementService{
 
         return result;
 
+    }
+
+    @Override
+    public EnrollmentDto getById(Long id) {
+        Enrollment enrollment = enrollmentRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("The given id is not found"));
+
+        return EnrollmentMapper.mapToDto(enrollment);
+    }
+
+
+
+    @Override
+    public Long getCount() {
+        Long result = enrollmentRepository.count();
+
+        return result;
+    }
+
+    @Override
+    public EnrollmentDto updateEnrollment(Long id ,EnrollmentRequestDto enrollmentRequestDto) {
+        Enrollment enrollment = enrollmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
+
+        enrollment.setStudent(student);
+        enrollment.setCourse(course);
+        enrollment.setEnrollmentDate(enrollmentRequestDto.getEnrollmentDate());
+        enrollment.setStatus(enrollmentRequestDto.getStatus());
+
+        Enrollment result = enrollmentRepository.save(enrollment);
+
+        return EnrollmentMapper.mapToDto(result);
+
+    }
+
+    @Override
+    public void deleteEnroll(Long id) {
+        enrollmentRepository.deleteById(id);
     }
 }

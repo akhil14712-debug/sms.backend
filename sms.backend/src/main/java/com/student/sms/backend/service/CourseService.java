@@ -1,12 +1,13 @@
 package com.student.sms.backend.service;
 
 import com.student.sms.backend.dto.CourseDto;
+import com.student.sms.backend.dto.CourseRequestDto;
 
 import java.util.List;
 
 public interface CourseService {
 
-    CourseDto createCourse(CourseDto courseDto);
+    CourseDto createCourse(CourseRequestDto courseRequestDto);
 
     CourseDto getCourseById(Long courseId);
 
@@ -14,7 +15,7 @@ public interface CourseService {
 
     List<CourseDto> getAllCourse();
 
-    CourseDto updateCourse(Long courseId, CourseDto updatedCourse);
+    CourseDto updateCourse(Long courseId, CourseRequestDto updatedCourse);
 
     void deleteCourse(Long id);
 
