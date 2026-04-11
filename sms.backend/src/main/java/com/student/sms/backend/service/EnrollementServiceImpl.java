@@ -11,9 +11,14 @@ import com.student.sms.backend.mapper.EnrollmentMapper;
 import com.student.sms.backend.repository.CourseRepository;
 import com.student.sms.backend.repository.EnrollmentRepository;
 import com.student.sms.backend.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
+@AllArgsConstructor
 public class EnrollementServiceImpl implements EnrollementService{
 
     private EnrollmentRepository enrollmentRepository;
@@ -21,11 +26,7 @@ public class EnrollementServiceImpl implements EnrollementService{
     private CourseRepository courseRepository;
 
 
-    public EnrollementServiceImpl(EnrollmentRepository enrollmentRepository,StudentRepository studentRepository , CourseRepository courseRepository){
-        this.enrollmentRepository = enrollmentRepository;
-        this.courseRepository = courseRepository;
-        this.studentRepository = studentRepository;
-    }
+
 
     @Override
     public EnrollmentDto createEnroll(EnrollmentRequestDto enrollmentRequestDto) {
@@ -45,6 +46,22 @@ public class EnrollementServiceImpl implements EnrollementService{
 
         return EnrollmentMapper.mapToDto(enrollmentRepository.save(e));
 
+
+    }
+
+    @Override
+    public List<EnrollmentDto> getALLEnrollment() {
+
+
+        List<Enrollment> enrollments = enrollmentRepository.findAll();
+
+        List<EnrollmentDto> result = new ArrayList<>();
+
+        for(Enrollment enrollment : enrollments){
+            result.add(EnrollmentMapper.mapToDto(enrollment));
+        }
+
+        return result;
 
     }
 }
