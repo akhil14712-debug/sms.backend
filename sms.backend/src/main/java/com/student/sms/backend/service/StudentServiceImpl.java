@@ -50,8 +50,8 @@ public class StudentServiceImpl implements StudentService{
     public StudentDto updateStudent(Long id,StudentDto updatedStudent){
         Student student = studentRepository.findById(id).orElseThrow(()->
                 new ResourceNotFoundException("Student is not exist with given id"+id));
-        student.setStudentId(updatedStudent.getStudentId());
         student.setSname(updatedStudent.getSname());
+        student.setDepartment(updatedStudent.getDepartment());
         student.setSemail(updatedStudent.getSemail());
         student.setSphone(updatedStudent.getSphone());
 

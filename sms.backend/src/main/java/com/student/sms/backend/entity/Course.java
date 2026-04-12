@@ -26,6 +26,9 @@ public class Course {
     @Column(name="courseName" , nullable = false)
     private String courseName;
 
+    @Column(name="description", nullable = false)
+    private String description;
+
 
     @Column(name="fee" ,nullable = false)
     private double fee;

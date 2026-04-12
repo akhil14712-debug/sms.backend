@@ -11,6 +11,7 @@ public class CourseMapper {
         Course course = new Course();
         course.setCourseId(courseRequestDto.getCourseId());
         course.setCourseName(courseRequestDto.getCourseName());
+        course.setDescription(courseRequestDto.getDescription());
         course.setFee(courseRequestDto.getFee());
         course.setDuration(courseRequestDto.getDuration());
         course.setTeacher(teacher);
@@ -23,6 +24,7 @@ public class CourseMapper {
         return new CourseDto(
                 course.getCourseId(),
                 course.getCourseName(),
+                course.getDescription(),
                 course.getFee(),
                 course.getDuration(),
                 course.getTeacher().getTname()

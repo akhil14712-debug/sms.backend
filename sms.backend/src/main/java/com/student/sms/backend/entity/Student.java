@@ -23,11 +23,12 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sid;
 
-    @Column(name="student_id")
-    private String studentId;
-
     @Column(name="sname" ,nullable = false)
     private String sname;
+
+
+    @Column(name="department")
+    private String department;
 
     @Column(name="semail",nullable = false,unique = true)
     private String semail;

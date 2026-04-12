@@ -40,9 +40,9 @@ public class CourseController {
     }
 
 
-    @PutMapping("{courseId}")
-    public ResponseEntity<CourseDto> updateCourse(@PathVariable Long courseId , @RequestBody CourseRequestDto updatedCourse){
-        CourseDto courseDto = courseService.updateCourse(courseId,updatedCourse);
+    @PutMapping("{id}")
+    public ResponseEntity<CourseDto> updateCourse(@PathVariable Long id , @RequestBody CourseRequestDto updatedCourse){
+        CourseDto courseDto = courseService.updateCourse(id,updatedCourse);
 
         return new ResponseEntity<>(courseDto,HttpStatus.OK);
     }

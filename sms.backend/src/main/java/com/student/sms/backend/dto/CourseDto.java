@@ -15,6 +15,7 @@ public class CourseDto {
 
     private Long courseId;
     private String courseName;
+    private String description;
     private double fee;
     private String duration;
     private String teacherName;

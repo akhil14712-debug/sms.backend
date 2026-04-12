@@ -8,8 +8,8 @@ public class StudentMapper {
     public static StudentDto mapToStudentDto(Student student){
         return new StudentDto(
                 student.getSid(),
-                student.getStudentId(),
                 student.getSname(),
+                student.getDepartment(),
                 student.getSemail(),
                 student.getSphone()
         );
@@ -18,8 +18,8 @@ public class StudentMapper {
     public static Student mapToStudent(StudentDto studentDto){
         Student student = new Student(
                 studentDto.getSid(),
-                studentDto.getStudentId(),
                 studentDto.getSname(),
+                studentDto.getDepartment(),
                 studentDto.getSemail(),
                 studentDto.getSphone(),
                 null

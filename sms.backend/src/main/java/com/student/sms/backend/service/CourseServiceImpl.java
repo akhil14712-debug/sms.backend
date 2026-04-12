@@ -8,6 +8,7 @@ import com.student.sms.backend.exception.ResourceNotFoundException;
 import com.student.sms.backend.mapper.CourseMapper;
 import com.student.sms.backend.repository.CourseRepository;
 import com.student.sms.backend.repository.TeacherRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -57,14 +58,15 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public CourseDto updateCourse(Long courseId, CourseRequestDto updatedCourse) {
-        Course course = courseRepository.findById(courseId).orElseThrow(()-> new ResourceNotFoundException("Give id is not found"+courseId));
+
+    public CourseDto updateCourse(Long id, CourseRequestDto updatedCourse) {
+        Course course = courseRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Give id is not found"+id));
 
         Teacher teacher = teacherRepository.findById(updatedCourse.getTeacherId())
                 .orElseThrow(() -> new RuntimeException("Teacher not found"));
-        course.setCourseId(updatedCourse.getCourseId());
-        course.setCourseName(updatedCourse.getCourseName());
 
+        course.setCourseName(updatedCourse.getCourseName());
+        course.setDescription(updatedCourse.getDescription());
         course.setFee(updatedCourse.getFee());
         course.setDuration(updatedCourse.getDuration());
         course.setTeacher(teacher);
