@@ -74,4 +74,16 @@ public class StudentServiceImpl implements StudentService{
         return studentRepository.count();
     }
 
+    @Override
+    public List<StudentDto> searchByName(String name) {
+        List<Student> students = studentRepository.searchByName(name);
+        List<StudentDto> result = new ArrayList<>();
+
+        for(Student student:students){
+            result.add(StudentMapper.mapToStudentDto(student));
+        }
+
+        return result;
+    }
+
 }

@@ -17,4 +17,6 @@ public interface StudentService {
     void deleteStudent(Long id);
 
     long getTotalCount();
+
+    List<StudentDto> searchByName(String name);
 }

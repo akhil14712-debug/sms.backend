@@ -63,4 +63,17 @@ public class StudentController {
         return ResponseEntity.ok(total);
     }
 
+
+    //Api for getting student details using name
+    @GetMapping("/search")
+
+    public ResponseEntity<List<StudentDto>> searchName(@RequestParam(value= "name",defaultValue = "") String name){
+
+        if(name.trim().isEmpty()){
+            return ResponseEntity.ok(studentService.getAllStudents());
+        }
+        List<StudentDto> result = studentService.searchByName(name);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
  }
