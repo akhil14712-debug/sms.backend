@@ -75,5 +75,17 @@ public class TeacherServiceImpl implements TeacherService{
         return count;
     }
 
+    @Override
+    public List<TeacherDto> searchTeacher(String name) {
+        List<Teacher> lists = teacherRepository.getTeacherByName(name);
+        List<TeacherDto> result = new ArrayList<>();
+
+        for(Teacher teacher:lists){
+            result.add(TeacherMapper.mapToTeacherDto(teacher));
+        }
+
+        return result;
+    }
+
 
 }

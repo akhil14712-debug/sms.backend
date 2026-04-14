@@ -1,6 +1,7 @@
 package com.student.sms.backend.service;
 
 import com.student.sms.backend.dto.StudentDto;
+import com.student.sms.backend.dto.TeacherDto;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface StudentService {
     long getTotalCount();
 
     List<StudentDto> searchByName(String name);
+
+
 }

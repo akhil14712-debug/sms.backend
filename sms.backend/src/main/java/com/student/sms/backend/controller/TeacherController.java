@@ -57,4 +57,15 @@ public class TeacherController {
         return new ResponseEntity<>(count,HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<TeacherDto>> searchTeacher(@RequestParam(value="name") String name){
+        if(name.trim().isEmpty()){
+            return ResponseEntity.ok(teacherService.getAllTeacher());
+        }
+        List<TeacherDto> result = teacherService.searchTeacher(name);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
+
+
 }

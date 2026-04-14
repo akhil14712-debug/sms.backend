@@ -18,4 +18,6 @@ public interface TeacherService {
     void deleteTeacher(Long teacherId);
 
     long getCount();
+
+    List<TeacherDto> searchTeacher(String name);
 }
