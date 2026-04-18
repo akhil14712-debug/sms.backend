@@ -5,6 +5,7 @@ import com.student.sms.backend.dto.StudentDto;
 import com.student.sms.backend.dto.TeacherDto;
 import com.student.sms.backend.service.StudentService;
 import com.student.sms.backend.service.TeacherService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class TeacherController {
     private TeacherService teacherService;
 
     @PostMapping
-    public ResponseEntity<TeacherDto> createTeacher(@RequestBody TeacherDto teacherDto){
+    public ResponseEntity<TeacherDto> createTeacher(@RequestBody @Valid TeacherDto teacherDto){
         TeacherDto savedTeacher = teacherService.createTeacher(teacherDto);
 
         return new ResponseEntity<>(savedTeacher, HttpStatus.CREATED);

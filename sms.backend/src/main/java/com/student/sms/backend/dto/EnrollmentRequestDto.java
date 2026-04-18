@@ -2,6 +2,8 @@ package com.student.sms.backend.dto;
 
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,8 +19,15 @@ import java.time.LocalDate;
 
 public class EnrollmentRequestDto {
 
+    @NotNull(message = "Student id should not be null")
     private Long studentId;
+
+    @NotNull(message = "Course id should not be null")
     private Long courseId;
+
+    @NotBlank(message = "Date should not be blank")
     private LocalDate enrollmentDate;
+
+    @NotBlank(message = "Status should not be blank")
     private String status;
 }

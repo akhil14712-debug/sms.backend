@@ -4,6 +4,7 @@ package com.student.sms.backend.controller;
 import com.student.sms.backend.dto.CourseDto;
 import com.student.sms.backend.dto.CourseRequestDto;
 import com.student.sms.backend.service.CourseService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class CourseController {
     private CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<CourseDto> createCourse(@RequestBody CourseRequestDto courseRequestDto){
+    public ResponseEntity<CourseDto> createCourse(@RequestBody @Valid CourseRequestDto courseRequestDto){
         CourseDto savedCourse = courseService.createCourse(courseRequestDto);
         return new ResponseEntity<>(savedCourse,HttpStatus.CREATED);
     }

@@ -4,6 +4,7 @@ package com.student.sms.backend.controller;
 import com.student.sms.backend.dto.EnrollmentDto;
 import com.student.sms.backend.dto.EnrollmentRequestDto;
 import com.student.sms.backend.service.EnrollementService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class EnrollmentController {
 
 
     @PostMapping
-    public ResponseEntity<EnrollmentDto> createEnroll(@RequestBody EnrollmentRequestDto enrollmentRequestDto){
+    public ResponseEntity<EnrollmentDto> createEnroll(@RequestBody @Valid  EnrollmentRequestDto enrollmentRequestDto){
         EnrollmentDto created = enrollementService.createEnroll(enrollmentRequestDto);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
