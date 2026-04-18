@@ -86,11 +86,11 @@ public class EnrollementServiceImpl implements EnrollementService{
     @Override
     public EnrollmentDto updateEnrollment(Long id ,EnrollmentRequestDto enrollmentRequestDto) {
         Enrollment enrollment = enrollmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
-        Course course = courseRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("The given enrollment id is not found"+id));
+        Student student = studentRepository.findById(enrollmentRequestDto.getStudentId())
+                .orElseThrow(() -> new ResourceNotFoundException("The given student id is not found"+id));
+        Course course = courseRepository.findById(enrollmentRequestDto.getCourseId())
+                .orElseThrow(() -> new ResourceNotFoundException("The given course id is not found"));
 
         enrollment.setStudent(student);
         enrollment.setCourse(course);
