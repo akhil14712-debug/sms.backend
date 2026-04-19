@@ -13,11 +13,8 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 @AllArgsConstructor
-
 @Setter
 @Getter
-
-
 @Service
 public class DashboardService {
 

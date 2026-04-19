@@ -14,4 +14,8 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
 
     @Query("Select s FROM Student s WHERE LOWER(s.sname) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Student> searchByName(@Param("name") String name);
+
+
+    @Query("SELECT s FROM Student s order by s.sname asc")
+    List<Student> sortByName();
 }

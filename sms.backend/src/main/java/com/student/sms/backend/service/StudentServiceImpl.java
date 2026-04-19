@@ -86,4 +86,16 @@ public class StudentServiceImpl implements StudentService{
         return result;
     }
 
+    @Override
+    public List<StudentDto> sortByName() {
+
+        List<Student> students = studentRepository.sortByName();
+        List<StudentDto> result = new ArrayList<>();
+
+        for(Student student:students) {
+            result.add(StudentMapper.mapToStudentDto(student));
+        }
+        return result;
+    }
+
 }

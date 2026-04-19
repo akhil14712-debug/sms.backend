@@ -21,5 +21,7 @@ public interface StudentService {
 
     List<StudentDto> searchByName(String name);
 
+    List<StudentDto> sortByName();
+
 
 }

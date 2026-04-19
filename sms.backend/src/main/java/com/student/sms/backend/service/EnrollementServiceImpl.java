@@ -12,10 +12,12 @@ import com.student.sms.backend.repository.CourseRepository;
 import com.student.sms.backend.repository.EnrollmentRepository;
 import com.student.sms.backend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 @AllArgsConstructor
@@ -107,4 +109,32 @@ public class EnrollementServiceImpl implements EnrollementService{
     public void deleteEnroll(Long id) {
         enrollmentRepository.deleteById(id);
     }
+
+//    @Override
+//    public List<EnrollmentDto> sortEnrollment(String sortBy, String direction) {
+//        String sortField;
+//
+//        switch(sortBy.toLowerCase()){
+//            case "name" : sortField = "studentName";
+//            break;
+//            case "date" : sortField = "enrollmentDate";
+//            break;
+//            default : sortField = "studentName";
+//            break;
+//        }
+//        Sort sort = direction.equalsIgnoreCase("desc")
+//                ? Sort.by(sortField).descending()
+//                :Sort.by(sortField).ascending();
+//
+//        List<Enrollment> enrollments = enrollmentRepository.findAll(sort);
+//        List<EnrollmentDto> result = new ArrayList<>();
+//
+//        for(Enrollment enrollment:enrollments){
+//            result.add(EnrollmentMapper.mapToDto(enrollment));
+//        }
+//
+//        return result;
+//    }
+
+
 }

@@ -20,4 +20,6 @@ public interface EnrollementService {
     EnrollmentDto updateEnrollment(Long id ,EnrollmentRequestDto enrollmentRequestDto);
 
     void deleteEnroll(Long id);
+
+//   List<EnrollmentDto> sortEnrollment(String sortBy,String direction);
 }

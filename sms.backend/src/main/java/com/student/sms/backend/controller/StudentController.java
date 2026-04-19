@@ -77,4 +77,11 @@ public class StudentController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+
+    @GetMapping("/sort/name")
+    public ResponseEntity<List<StudentDto>> sortByName(){
+        List<StudentDto> result = studentService.sortByName();
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
+
  }
