@@ -9,6 +9,4 @@ import java.util.List;
 
 @Repository
 public interface EnrollmentRepository extends JpaRepository<Enrollment,Long> {
-
-
 }

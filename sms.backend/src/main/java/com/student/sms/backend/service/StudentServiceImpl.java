@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -84,18 +85,17 @@ public class StudentServiceImpl implements StudentService{
         }
 
         return result;
+
+
     }
 
     @Override
     public List<StudentDto> sortByName() {
 
-        List<Student> students = studentRepository.sortByName();
-        List<StudentDto> result = new ArrayList<>();
-
-        for(Student student:students) {
-            result.add(StudentMapper.mapToStudentDto(student));
-        }
-        return result;
+        return studentRepository.sortByName()
+                .stream()
+                .map(StudentMapper::mapToStudentDto)
+                .collect(Collectors.toList());
     }
 
 }

@@ -18,16 +18,15 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class EnrollementServiceImpl implements EnrollementService{
+public class EnrollementServiceImpl implements EnrollementService {
 
     private EnrollmentRepository enrollmentRepository;
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
-
-
 
 
     @Override
@@ -35,10 +34,10 @@ public class EnrollementServiceImpl implements EnrollementService{
 
 
         Student student = studentRepository.findById(enrollmentRequestDto.getStudentId())
-                .orElseThrow(()-> new ResourceNotFoundException("Student not found"+enrollmentRequestDto.getStudentId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found" + enrollmentRequestDto.getStudentId()));
 
         Course course = courseRepository.findById(enrollmentRequestDto.getCourseId())
-                .orElseThrow(()-> new ResourceNotFoundException("Cource not found"+enrollmentRequestDto.getCourseId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Cource not found" + enrollmentRequestDto.getCourseId()));
 
         Enrollment e = new Enrollment();
         e.setStudent(student);
@@ -60,7 +59,7 @@ public class EnrollementServiceImpl implements EnrollementService{
 
         List<EnrollmentDto> result = new ArrayList<>();
 
-        for(Enrollment enrollment : enrollments){
+        for (Enrollment enrollment : enrollments) {
             result.add(EnrollmentMapper.mapToDto(enrollment));
         }
 
@@ -71,11 +70,10 @@ public class EnrollementServiceImpl implements EnrollementService{
     @Override
     public EnrollmentDto getById(Long id) {
         Enrollment enrollment = enrollmentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("The given id is not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("The given id is not found"));
 
         return EnrollmentMapper.mapToDto(enrollment);
     }
-
 
 
     @Override
@@ -86,11 +84,11 @@ public class EnrollementServiceImpl implements EnrollementService{
     }
 
     @Override
-    public EnrollmentDto updateEnrollment(Long id ,EnrollmentRequestDto enrollmentRequestDto) {
+    public EnrollmentDto updateEnrollment(Long id, EnrollmentRequestDto enrollmentRequestDto) {
         Enrollment enrollment = enrollmentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The given enrollment id is not found"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("The given enrollment id is not found" + id));
         Student student = studentRepository.findById(enrollmentRequestDto.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("The given student id is not found"+id));
+                .orElseThrow(() -> new ResourceNotFoundException("The given student id is not found" + id));
         Course course = courseRepository.findById(enrollmentRequestDto.getCourseId())
                 .orElseThrow(() -> new ResourceNotFoundException("The given course id is not found"));
 
@@ -110,31 +108,28 @@ public class EnrollementServiceImpl implements EnrollementService{
         enrollmentRepository.deleteById(id);
     }
 
-//    @Override
-//    public List<EnrollmentDto> sortEnrollment(String sortBy, String direction) {
-//        String sortField;
-//
-//        switch(sortBy.toLowerCase()){
-//            case "name" : sortField = "studentName";
-//            break;
-//            case "date" : sortField = "enrollmentDate";
-//            break;
-//            default : sortField = "studentName";
-//            break;
-//        }
-//        Sort sort = direction.equalsIgnoreCase("desc")
-//                ? Sort.by(sortField).descending()
-//                :Sort.by(sortField).ascending();
-//
-//        List<Enrollment> enrollments = enrollmentRepository.findAll(sort);
-//        List<EnrollmentDto> result = new ArrayList<>();
-//
-//        for(Enrollment enrollment:enrollments){
-//            result.add(EnrollmentMapper.mapToDto(enrollment));
-//        }
-//
-//        return result;
-//    }
+    @Override
+    public List<EnrollmentDto> sortEnrollment(String sortBy, String direction) {
+        String sortField = "student.sname";
+
+        switch (sortBy.toLowerCase()) {
+            case "name":
+                sortField = "student.sname";
+                break;
+            case "date":
+                sortField = "enrollmentDate";
+                break;
+
+
+        }
+        Sort sort = direction.equalsIgnoreCase("desc") ?
+                Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+
+        List<Enrollment> enrollments = enrollmentRepository.findAll(sort);
+        return enrollments.stream()
+                .map(EnrollmentMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
 
 
 }

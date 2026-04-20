@@ -63,11 +63,12 @@ public class EnrollmentController {
         return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
     }
 
-//    @GetMapping("/sort")
-//    public ResponseEntity<List<EnrollmentDto>> sortDate(@RequestParam(defaultValue = "name") String sortBy , @RequestParam(defaultValue = "asc") String direction){
-//        List<EnrollmentDto> result = enrollementService.sortEnrollment(sortBy,direction);
-//        return new ResponseEntity<>(result,HttpStatus.OK);
-//    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<List<EnrollmentDto>> sortedName(@RequestParam(defaultValue = "name") String sortBy , @RequestParam(defaultValue = "asc") String direction){
+        List<EnrollmentDto> result = enrollementService.sortEnrollment(sortBy,direction);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 
 
 }

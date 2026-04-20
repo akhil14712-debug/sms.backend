@@ -25,7 +25,7 @@ public class EnrollmentRequestDto {
     @NotNull(message = "Course id should not be null")
     private Long courseId;
 
-    @NotBlank(message = "Date should not be blank")
+    @NotNull(message = "Date should not be blank")
     private LocalDate enrollmentDate;
 
     @NotBlank(message = "Status should not be blank")

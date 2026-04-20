@@ -11,8 +11,6 @@ public interface CourseService {
 
     CourseDto getCourseById(Long courseId);
 
-
-
     List<CourseDto> getAllCourse();
 
     CourseDto updateCourse(Long id, CourseRequestDto updatedCourse);
