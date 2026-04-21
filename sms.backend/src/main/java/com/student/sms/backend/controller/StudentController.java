@@ -4,6 +4,7 @@ import com.student.sms.backend.dto.StudentDto;
 import com.student.sms.backend.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,9 +79,12 @@ public class StudentController {
     }
 
 
-    @GetMapping("/sort/name")
-    public ResponseEntity<List<StudentDto>> sortByName(){
-        List<StudentDto> result = studentService.sortByName();
+
+
+    @GetMapping("/page")
+
+    public ResponseEntity<List<StudentDto>> getByPages(@RequestParam int pageNo , @RequestParam int pageSize){
+        List<StudentDto> result = studentService.getByPages(PageRequest.of(pageNo-1,pageSize));
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 

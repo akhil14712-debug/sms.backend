@@ -16,6 +16,5 @@ public interface StudentRepository extends JpaRepository<Student,Long> {
     List<Student> searchByName(@Param("name") String name);
 
 
-    @Query("SELECT s FROM Student s order by s.sname asc")
-    List<Student> sortByName();
+
 }

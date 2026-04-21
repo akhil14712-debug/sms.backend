@@ -22,4 +22,6 @@ public interface EnrollementService {
     void deleteEnroll(Long id);
 
     List<EnrollmentDto> sortEnrollment(String sortBy, String direction);
+
+    List<EnrollmentDto> searchEnrollment(String name,String course,String status);
 }

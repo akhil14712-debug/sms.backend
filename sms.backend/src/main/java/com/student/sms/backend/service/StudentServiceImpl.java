@@ -6,6 +6,8 @@ import com.student.sms.backend.exception.ResourceNotFoundException;
 import com.student.sms.backend.mapper.StudentMapper;
 import com.student.sms.backend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,17 +37,16 @@ public class StudentServiceImpl implements StudentService{
     }
 
     @Override
-    public List<StudentDto> getAllStudents(){
-        List<Student> students = studentRepository.findAll();
-        List<StudentDto> studentDto = new ArrayList<>();
+    public List<StudentDto> getAllStudents() {
 
-        for(Student student:students){
-            StudentDto dto = StudentMapper.mapToStudentDto(student);
-            studentDto.add(dto);
-        }
+        return studentRepository.findAll()
+                .stream()
+                .map(StudentMapper::mapToStudentDto)
+                .collect(Collectors.toList());
 
-        return studentDto;
     }
+
+
     @Override
 
     public StudentDto updateStudent(Long id,StudentDto updatedStudent){
@@ -89,10 +90,12 @@ public class StudentServiceImpl implements StudentService{
 
     }
 
-    @Override
-    public List<StudentDto> sortByName() {
 
-        return studentRepository.sortByName()
+
+    @Override
+    public List<StudentDto> getByPages(Pageable pageable) {
+        return studentRepository.findAll(pageable)
+                .getContent()
                 .stream()
                 .map(StudentMapper::mapToStudentDto)
                 .collect(Collectors.toList());

@@ -131,5 +131,13 @@ public class EnrollementServiceImpl implements EnrollementService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<EnrollmentDto> searchEnrollment(String name, String course, String status) {
+        return enrollmentRepository.searchEnrollment(name,course,status)
+                .stream()
+                .map(EnrollmentMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
 
 }

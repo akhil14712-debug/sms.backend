@@ -70,5 +70,10 @@ public class EnrollmentController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<EnrollmentDto> >searchEnrollment(@RequestParam(value="name",defaultValue = "") String name ,@RequestParam(value="course",defaultValue = "") String course,@RequestParam(value="status",defaultValue = "") String status){
+        List<EnrollmentDto> result = enrollementService.searchEnrollment(name,course,status);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 
 }
