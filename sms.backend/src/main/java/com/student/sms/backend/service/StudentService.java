@@ -2,10 +2,12 @@ package com.student.sms.backend.service;
 
 import com.student.sms.backend.dto.StudentDto;
 import com.student.sms.backend.dto.TeacherDto;
+import com.student.sms.backend.entity.Student;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudentService {
 
@@ -19,12 +21,10 @@ public interface StudentService {
 
     void deleteStudent(Long id);
 
-    long getTotalCount();
-
-    List<StudentDto> searchByName(String name);
 
 
+    Map<String,Object> searchAllStudent(String name,String department,int pageNo,int pageSize,String sortBy,String sortDir);
 
 
-    List<StudentDto> getByPages(Pageable pageable);
+
 }

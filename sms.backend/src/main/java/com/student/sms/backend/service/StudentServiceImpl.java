@@ -6,12 +6,16 @@ import com.student.sms.backend.exception.ResourceNotFoundException;
 import com.student.sms.backend.mapper.StudentMapper;
 import com.student.sms.backend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -71,34 +75,47 @@ public class StudentServiceImpl implements StudentService{
 
     }
 
-    @Override
-    public long getTotalCount() {
-        return studentRepository.count();
-    }
 
     @Override
-    public List<StudentDto> searchByName(String name) {
-        List<Student> students = studentRepository.searchByName(name);
-        List<StudentDto> result = new ArrayList<>();
+    public Map<String, Object> searchAllStudent(String name, String department, int pageNo, int pageSize, String sortBy, String sortDir) {
+        String sortFiled = "";
 
-        for(Student student:students){
-            result.add(StudentMapper.mapToStudentDto(student));
+        if(sortBy != null  && !sortBy.isEmpty()) {
+            switch (sortBy.toLowerCase()) {
+                case "name":
+                    sortFiled = "sname";
+                    break;
+
+                case "department":
+                    sortFiled = "department";
+                    break;
+                default:
+                    sortFiled = "id";
+                    break;
+            }
         }
 
-        return result;
+            Sort sort = sortDir.equalsIgnoreCase("desc") ?
+                    Sort.by(sortFiled).descending() :
+                    Sort.by(sortFiled).ascending();
 
+            Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
 
-    }
+            Page<Student> pageList = studentRepository.searchStudent(name, department, pageable);
 
+            List<StudentDto> dtoList = pageList.getContent()
+                    .stream().map(StudentMapper::mapToStudentDto)
+                    .collect(Collectors.toList());
 
+            Map<String, Object> map = new HashMap<>();
 
-    @Override
-    public List<StudentDto> getByPages(Pageable pageable) {
-        return studentRepository.findAll(pageable)
-                .getContent()
-                .stream()
-                .map(StudentMapper::mapToStudentDto)
-                .collect(Collectors.toList());
-    }
+            map.put("data", dtoList);
+            map.put("currentItem", pageList.getNumber());
+            map.put("totalNumber", pageList.getTotalElements());
+            map.put("numberOfPage", pageList.getTotalPages());
+            map.put("isLast", pageList.isLast());
+
+            return map;
+        }
 
 }

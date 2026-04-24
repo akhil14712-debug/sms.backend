@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -31,11 +32,7 @@ public class EnrollmentController {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public ResponseEntity<List<EnrollmentDto>> getAllEnrollemnt(){
-        List<EnrollmentDto> list = enrollementService.getALLEnrollment();
-        return new ResponseEntity<>(list,HttpStatus.OK);
-    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<EnrollmentDto> getById(@PathVariable Long id){
@@ -63,17 +60,30 @@ public class EnrollmentController {
         return new ResponseEntity<>("Deleted successfully",HttpStatus.OK);
     }
 
+    @GetMapping
 
-    @GetMapping("/sort")
-    public ResponseEntity<List<EnrollmentDto>> sortedName(@RequestParam(defaultValue = "name") String sortBy , @RequestParam(defaultValue = "asc") String direction){
-        List<EnrollmentDto> result = enrollementService.sortEnrollment(sortBy,direction);
+    public ResponseEntity<Map<String,Object>> searchEnrollment(@RequestParam(defaultValue = "") String name,
+                                                               @RequestParam(defaultValue = "") String course,
+                                                               @RequestParam(defaultValue = "") String status,
+                                                               @RequestParam(defaultValue = "0") int pageNo,
+                                                               @RequestParam(defaultValue = "10") int pageSize ,
+                                                               @RequestParam(defaultValue = "name") String sortBy,
+                                                               @RequestParam(defaultValue = "asc") String sortDir){
+
+        Map<String,Object> result = enrollementService.searchEnrollemts(name,course,status,pageNo,pageSize,sortBy,sortDir);
+
+        return ResponseEntity.ok(result);
+
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<EnrollmentDto>> getAllEnrollment(){
+        List<EnrollmentDto> result = enrollementService.getAllEnrollemnts();
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<EnrollmentDto> >searchEnrollment(@RequestParam(value="name",defaultValue = "") String name ,@RequestParam(value="course",defaultValue = "") String course,@RequestParam(value="status",defaultValue = "") String status){
-        List<EnrollmentDto> result = enrollementService.searchEnrollment(name,course,status);
-        return new ResponseEntity<>(result,HttpStatus.OK);
-    }
+
+
+
 
 }

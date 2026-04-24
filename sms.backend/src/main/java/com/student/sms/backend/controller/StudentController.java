@@ -4,12 +4,14 @@ import com.student.sms.backend.dto.StudentDto;
 import com.student.sms.backend.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin("*")
 @RestController
@@ -59,33 +61,32 @@ public class StudentController {
 
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<Long> getTotalCount(){
-        long total = studentService.getTotalCount();
-        return ResponseEntity.ok(total);
+
+    @GetMapping("search")
+    public ResponseEntity<Map<String , Object>> getStudents(
+            @RequestParam(defaultValue = "") String name,
+            @RequestParam(defaultValue = "") String department,
+            @RequestParam(defaultValue = "1") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize,
+            @RequestParam(defaultValue = "name") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+
+    ){
+        Map<String,Object> result = studentService.searchAllStudent(name,department,pageNo,pageSize,sortBy,sortDir);
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-
-    //Api for getting student details using name
-    @GetMapping("/search")
-
-    public ResponseEntity<List<StudentDto>> searchName(@RequestParam(value= "name",defaultValue = "") String name){
-
-        if(name.trim().isEmpty()){
-            return ResponseEntity.ok(studentService.getAllStudents());
-        }
-        List<StudentDto> result = studentService.searchByName(name);
-        return new ResponseEntity<>(result,HttpStatus.OK);
-    }
+  }
 
 
 
 
-    @GetMapping("/page")
 
-    public ResponseEntity<List<StudentDto>> getByPages(@RequestParam int pageNo , @RequestParam int pageSize){
-        List<StudentDto> result = studentService.getByPages(PageRequest.of(pageNo-1,pageSize));
-        return new ResponseEntity<>(result,HttpStatus.OK);
-    }
 
- }
+
+
+
+
+
+

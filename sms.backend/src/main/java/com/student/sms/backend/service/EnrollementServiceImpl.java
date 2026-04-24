@@ -12,13 +12,20 @@ import com.student.sms.backend.repository.CourseRepository;
 import com.student.sms.backend.repository.EnrollmentRepository;
 import com.student.sms.backend.repository.StudentRepository;
 import lombok.AllArgsConstructor;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+
+import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @Service
 @AllArgsConstructor
@@ -52,20 +59,15 @@ public class EnrollementServiceImpl implements EnrollementService {
     }
 
     @Override
-    public List<EnrollmentDto> getALLEnrollment() {
-
-
+    public List<EnrollmentDto> getAllEnrollemnts() {
         List<Enrollment> enrollments = enrollmentRepository.findAll();
 
-        List<EnrollmentDto> result = new ArrayList<>();
-
-        for (Enrollment enrollment : enrollments) {
-            result.add(EnrollmentMapper.mapToDto(enrollment));
-        }
-
-        return result;
-
+        return enrollments.stream()
+                .map(EnrollmentMapper::mapToDto)
+                .collect(Collectors.toList());
     }
+
+
 
     @Override
     public EnrollmentDto getById(Long id) {
@@ -109,34 +111,43 @@ public class EnrollementServiceImpl implements EnrollementService {
     }
 
     @Override
-    public List<EnrollmentDto> sortEnrollment(String sortBy, String direction) {
-        String sortField = "student.sname";
+    public Map<String, Object> searchEnrollemts(String name, String course, String status, int pageNo, int pageSize, String sortBy, String sortDir) {
 
-        switch (sortBy.toLowerCase()) {
-            case "name":
-                sortField = "student.sname";
-                break;
-            case "date":
-                sortField = "enrollmentDate";
-                break;
-
-
+        String sortField = "";
+        if(sortBy != null && !sortBy.trim().isEmpty()){
+            switch(sortBy.toLowerCase()){
+                case "name":
+                    sortField = "student.sname";
+                    break;
+                case "course":
+                    sortField = "course.courseName";
+                    break;
+                case "status":
+                    sortField = "status";
+                    break;
+                default:
+                sortField = "id";
+            }
         }
-        Sort sort = direction.equalsIgnoreCase("desc") ?
-                Sort.by(sortField).descending() : Sort.by(sortField).ascending();
+        Sort sort = sortDir.equalsIgnoreCase("desc") ?
+                Sort.by(sortField).descending():
+                Sort.by(sortField).ascending();
+        Pageable pageable = PageRequest.of(pageNo,pageSize,sort);
 
-        List<Enrollment> enrollments = enrollmentRepository.findAll(sort);
-        return enrollments.stream()
-                .map(EnrollmentMapper::mapToDto)
-                .collect(Collectors.toList());
-    }
+        Page<Enrollment> searchPage = enrollmentRepository.searchEnrollment(name,course,status,pageable);
 
-    @Override
-    public List<EnrollmentDto> searchEnrollment(String name, String course, String status) {
-        return enrollmentRepository.searchEnrollment(name,course,status)
-                .stream()
-                .map(EnrollmentMapper::mapToDto)
+        List<EnrollmentDto> dtoList = searchPage.getContent()
+                .stream().map(EnrollmentMapper::mapToDto)
                 .collect(Collectors.toList());
+
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",dtoList);
+        map.put("currentPage",searchPage.getNumber());
+        map.put("totalItems",searchPage.getTotalElements());
+        map.put("totalPages",searchPage.getTotalPages());
+        map.put("isLast",searchPage.isLast());
+
+        return map;
     }
 
 

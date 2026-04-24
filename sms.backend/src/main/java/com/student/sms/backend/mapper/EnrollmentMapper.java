@@ -14,7 +14,6 @@ public class EnrollmentMapper {
         dto.setCourseName(enrollment.getCourse().getCourseName());
         dto.setEnrollmentDate(enrollment.getEnrollmentDate());
         dto.setStatus(enrollment.getStatus());
-
         return dto;
     }
 

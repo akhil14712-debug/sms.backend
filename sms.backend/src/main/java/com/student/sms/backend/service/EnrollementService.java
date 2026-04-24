@@ -4,12 +4,14 @@ import com.student.sms.backend.dto.EnrollmentDto;
 import com.student.sms.backend.dto.EnrollmentRequestDto;
 import com.student.sms.backend.entity.Enrollment;
 
+import java.awt.print.Pageable;
 import java.util.List;
+import java.util.Map;
 
 public interface EnrollementService {
     EnrollmentDto createEnroll(EnrollmentRequestDto enrollmentRequestDto);
 
-    List<EnrollmentDto> getALLEnrollment();
+   List<EnrollmentDto> getAllEnrollemnts();
 
     EnrollmentDto getById(Long id);
 
@@ -21,7 +23,5 @@ public interface EnrollementService {
 
     void deleteEnroll(Long id);
 
-    List<EnrollmentDto> sortEnrollment(String sortBy, String direction);
-
-    List<EnrollmentDto> searchEnrollment(String name,String course,String status);
+     Map<String,Object> searchEnrollemts(String name, String course, String status, int pageNo , int pageSize , String sortBy ,String sortDir);
 }
