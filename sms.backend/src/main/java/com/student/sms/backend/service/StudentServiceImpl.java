@@ -107,14 +107,16 @@ public class StudentServiceImpl implements StudentService{
                     .stream().map(StudentMapper::mapToStudentDto)
                     .collect(Collectors.toList());
 
+            Map<String,Object> map1 = new HashMap<>();
+            map1.put("currentItem", pageList.getNumber());
+            map1.put("totalNumber", pageList.getTotalElements());
+            map1.put("numberOfPage", pageList.getTotalPages());
+            map1.put("isLast", pageList.isLast());
+
             Map<String, Object> map = new HashMap<>();
 
             map.put("data", dtoList);
-            map.put("currentItem", pageList.getNumber());
-            map.put("totalNumber", pageList.getTotalElements());
-            map.put("numberOfPage", pageList.getTotalPages());
-            map.put("isLast", pageList.isLast());
-
+            map.put("pagination",map1);
             return map;
         }
 

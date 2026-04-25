@@ -125,6 +125,9 @@ public class EnrollementServiceImpl implements EnrollementService {
                 case "status":
                     sortField = "status";
                     break;
+                case "enrollmentDate" :
+                    sortField = "enrollmentDate";
+                    break;
                 default:
                 sortField = "id";
             }
@@ -140,12 +143,20 @@ public class EnrollementServiceImpl implements EnrollementService {
                 .stream().map(EnrollmentMapper::mapToDto)
                 .collect(Collectors.toList());
 
+
+        Map<String,Object> map1 = new HashMap();
+        map1.put("currentPage",searchPage.getNumber());
+        map1.put("totalPages",searchPage.getTotalPages());
+        map1.put("isLast",searchPage.isLast());
+        map1.put("totalItems",searchPage.getTotalElements());
+
+
         Map<String,Object> map = new HashMap<>();
         map.put("data",dtoList);
-        map.put("currentPage",searchPage.getNumber());
-        map.put("totalItems",searchPage.getTotalElements());
-        map.put("totalPages",searchPage.getTotalPages());
-        map.put("isLast",searchPage.isLast());
+        map.put("pagination",map1);
+
+
+
 
         return map;
     }

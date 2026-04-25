@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -49,12 +50,9 @@ public class CourseServiceImpl implements CourseService{
         List<Course> courses = courseRepository.findAll();
         List<CourseDto> CourseDto = new ArrayList();
 
-        for(Course course:courses){
-            CourseDto dto = CourseMapper.mapToCourseDto(course);
-            CourseDto.add(dto);
-        }
-
-        return CourseDto;
+        return courses.stream()
+                .map(CourseMapper::mapToCourseDto)
+                .collect(Collectors.toList());
     }
 
     @Override
