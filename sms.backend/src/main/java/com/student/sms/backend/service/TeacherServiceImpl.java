@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -39,12 +41,9 @@ public class TeacherServiceImpl implements TeacherService{
         List<Teacher> teachers = teacherRepository.findAll();
         List<TeacherDto> result = new ArrayList<>();
 
-        for(Teacher teacher : teachers){
-            TeacherDto dto = TeacherMapper.mapToTeacherDto(teacher);
-            result.add(dto);
-        }
-
-        return result;
+        return teachers.stream()
+                .map(TeacherMapper::mapToTeacherDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -78,13 +77,10 @@ public class TeacherServiceImpl implements TeacherService{
     @Override
     public List<TeacherDto> searchTeacher(String name) {
         List<Teacher> lists = teacherRepository.getTeacherByName(name);
-        List<TeacherDto> result = new ArrayList<>();
 
-        for(Teacher teacher:lists){
-            result.add(TeacherMapper.mapToTeacherDto(teacher));
-        }
-
-        return result;
+        return lists.stream()
+                .map(TeacherMapper::mapToTeacherDto)
+                .collect(Collectors.toList());
     }
 
 
