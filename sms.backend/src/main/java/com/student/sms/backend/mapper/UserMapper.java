@@ -3,20 +3,26 @@ package com.student.sms.backend.mapper;
 import com.student.sms.backend.entity.UserEntity;
 import com.student.sms.backend.io.ProfileRequest;
 import com.student.sms.backend.io.ProfileResponse;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
 @Component
+@RequiredArgsConstructor
 public class UserMapper {
 
-    public static UserEntity convetToUserEntity(ProfileRequest profileRequest){
+    private final PasswordEncoder passwordEncoder;
+
+    public  UserEntity convetToUserEntity(ProfileRequest profileRequest){
 
         return UserEntity.builder()
                 .email(profileRequest.getEmail())
                 .userId(UUID.randomUUID().toString())
                 .name(profileRequest.getName())
-                .password(profileRequest.getPassword())
+                .password(passwordEncoder.encode(profileRequest.getPassword()))
                 .isAccountVerified(false)
                 .resetOtpExpireAt(0L)
                 .verifyOtp(null)
@@ -26,7 +32,7 @@ public class UserMapper {
 
     }
 
-    public static ProfileResponse convertToPofileResponse(UserEntity userEntity){
+    public  ProfileResponse convertToPofileResponse(UserEntity userEntity){
         return ProfileResponse.builder()
                 .name(userEntity.getName())
                 .email(userEntity.getEmail())
