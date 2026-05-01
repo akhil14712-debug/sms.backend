@@ -1,4 +1,4 @@
-# 🎓 Student Management System — Backend
+# 🎓 EduTracker — Backend
 
 **A robust RESTful backend for managing students, courses, teachers, and enrollments.**
 
