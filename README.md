@@ -71,12 +71,13 @@ The Student Management System (SMS) backend is a Spring Boot REST API that power
 ### 📋 Enrollments
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | /api/enrollments | Get all enrollments |
+
 | GET | /api/enrollments/{id} | Get enrollment by ID |
 | GET | /api/enrollments/count | Get total enrollment count |
 | POST | /api/enrollments | Create new enrollment |
 | PUT | /api/enrollments/{id} | Update enrollment |
 | DELETE | /api/enrollments/{id} | Delete enrollment |
+|  Searching , filtering , sorting , paggination  GET | /api/enrollments |
 
 ---
 
