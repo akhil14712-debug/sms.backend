@@ -114,6 +114,7 @@ public class EnrollementServiceImpl implements EnrollementService {
     public Map<String, Object> searchEnrollemts(String name, String course, String status, int pageNo, int pageSize, String sortBy, String sortDir) {
 
         String sortField = "";
+        
         if(sortBy != null && !sortBy.trim().isEmpty()){
             switch(sortBy.toLowerCase()){
                 case "name":

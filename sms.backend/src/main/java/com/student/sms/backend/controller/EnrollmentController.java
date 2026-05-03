@@ -61,7 +61,6 @@ public class EnrollmentController {
     }
 
     @GetMapping
-
     public ResponseEntity<Map<String,Object>> searchEnrollment(@RequestParam(defaultValue = "") String name,
                                                                @RequestParam(defaultValue = "") String course,
                                                                @RequestParam(defaultValue = "") String status,
