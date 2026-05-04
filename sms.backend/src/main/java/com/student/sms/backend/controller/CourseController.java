@@ -61,11 +61,7 @@ public class CourseController {
         return ResponseEntity.ok(total);
     }
 
-    @GetMapping("/count")
-    public ResponseEntity<Long> getCourseCount(){
-        long total = courseService.getCourseCount();
-        return ResponseEntity.ok(total);
-    }
+
 
 
 }
